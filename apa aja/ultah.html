@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #fce4ec;
+            overflow: hidden;
+        }
+        .hidden { display: none; }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #e91e63;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .envelope {
+            width: 150px;
+            cursor: pointer;
+        }
+        .message-box {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 80%;
+        }
+        .cake {
+            width: 200px;
+            height: 200px;
+            background: url('https://i.imgur.com/8B0BMpR.png') no-repeat center;
+            background-size: cover;
+            margin: 20px auto;
+        }
+        .candle { width: 10px; height: 40px; background: #ff9800; margin: 0 auto; }
+        .flame {
+            width: 10px;
+            height: 20px;
+            background: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: -20px;
+            left: 0;
+            animation: flicker 1s infinite alternate;
+        }
+        @keyframes flicker { 0% { opacity: 1; } 100% { opacity: 0.6; } }
+    </style>
+</head>
+<body>
+    <!-- Halaman 1: Musik -->
+<div id="page1">
+    <h1>Selamat Ulang Tahun!</h1>
+    <button class="button" onclick="playMusic(); nextPage(2)">Mulai 🎵</button>
+</div>
+
+<!-- Elemen audio -->
+<audio id="birthdayMusic" loop>
+    <source src="hbd.mpeg" type="audio/mpeg">
+    Browser Anda tidak mendukung tag audio.
+</audio>
+
+<script>
+    function playMusic() {
+        const music = document.getElementById("birthdayMusic");
+        if (music.paused) {
+            music.volume = 0.5; // Set volume ke 50%
+            music.play().catch(error => console.error("Gagal memutar musik:", error));
+        }
+    }
+</script>
+
+
+    <!-- Halaman 2: Input Nama -->
+    <div id="page2" class="hidden">
+        <h1>Masukkan Nama Anda</h1>
+        <input type="text" id="nameInput" placeholder="Nama Anda">
+        <button class="button" onclick="nextPage(3)">Lanjut</button>
+    </div>
+
+    <!-- Halaman 3: Ucapan Ulang Tahun -->
+    <div id="page3" class="hidden">
+        <h1>Selamat Ulang Tahun, <span id="userName"></span>! 🎉</h1>
+        <button class="button" onclick="nextPage(4)">Lanjut</button>
+    </div>
+
+    <!-- Halaman 4: Amplop & Surat -->
+    <div id="page4" class="hidden">
+        <img src="amplop.jpeg" alt="Amplop" class="envelope" onclick="openEnvelope()">
+        <div class="message-box" id="message-box">
+            <p>Selamat ulang tahun...</p>
+            <p>Selamat ulang tahun...  
+
+                Lucu ya, dulu selalu ada alasan buat ngobrol, buat cerita apa aja tanpa mikir panjang. Sekarang? Bahkan buat sekadar ngucapin aja rasanya canggung. Kita yang dulu dekat, sekarang cuma jadi dua orang yang pernah saling kenal. Aneh sih, tapi mungkin memang harus begitu.  
+                
+                Gak tahu kabarmu gimana sekarang, siapa yang sering ada di sekitarmu, atau apa yang lagi bikin kamu bahagia. Tapi semoga di umur yang baru ini, banyak hal baik yang datang, banyak mimpi yang tercapai, dan kamu dikelilingi orang-orang yang benar-benar peduli.  
+                
+                Kadang masih ada rasa rindu, bukan buat kembali, tapi lebih ke kangen sama versi kita yang dulu—yang bisa tertawa tanpa beban, yang gak harus mikir dua kali buat sekadar bertanya "lagi apa?". Tapi ya, hidup terus berjalan. Jadi, jaga diri baik-baik ya.  
+                
+                Oh iya, SNBT udah makin dekat. Aku tahu kamu punya impian besar buat masuk kampus yang kamu mau, dan aku harap kamu bisa dapetin itu. Jangan nyerah, ya. Aku percaya kamu bisa. Semoga semua kerja kerasmu terbayar lunas, dan kamu bisa ada di tempat yang selama ini kamu impikan. Tetap semangat, tetap percaya diri. Aku doain yang terbaik buat kamu.  
+                
+                Semoga selalu bahagia.</p>
+            <button class="button" onclick="nextPage(5)">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- Halaman 5: Input Pesan Pengguna -->
+    <div id="page5" class="hidden">
+        <h1>Tulis Pesanmu</h1>
+        <textarea id="userMessage" rows="5" placeholder="Tulis sesuatu..."></textarea>
+        <button class="button" onclick="nextPage(6)">Lanjut</button>
+    </div>
+
+    <!-- Halaman 6: Tiup Lilin -->
+    <div id="page6" class="hidden">
+        <h1>Tiup lilinnya!</h1>
+        <div class="cake">
+            <div class="candle">
+                <div class="flame" id="flame"></div>
+            </div>
+        </div>
+        <button class="button" onclick="nextPage(7)">Tiup! 🎂</button>
+    </div>
+
+     <!-- Halaman 7: Tiup Lilin -->
+     <div id="page7" class="hidden">
+        <h1>TERIMAKASIH!</h1>
+        <div class="cake">
+            <div class="candle">
+                <div class="flame" id="flame"></div>
+            </div>
+        </div>
+     </div>
+
+    <script>
+        function nextPage(page) {
+            document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(`page${page}`).classList.remove('hidden');
+            if (page === 3) {
+                const name = document.getElementById("nameInput").value;
+                document.getElementById("userName").textContent = name;
+            }
+        }
+
+        function openEnvelope() {
+            document.getElementById("message-box").style.display = "block";
+        }
+
+        function blowCandle() {
+            document.getElementById("flame").style.display = "none";
+            alert("Selamat Ulang Tahun! 🎉");
+        }
+    </script>
+</body>
+</html>
